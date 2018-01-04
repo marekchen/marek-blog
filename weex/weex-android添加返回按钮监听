@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>weex-android添加返回按钮监听 | Marek&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述在一些场景中需要在选择内容后回传，例如地址选择、日期选择等。如果用两个页面来传递信息会使逻辑变得复杂，所以我们在开发过程中选择添加一个蒙层来进行选择操作（我们使用weex-ui的wxc-popup）。但是这会带来另一个问题，在android手机上按返回键时整个页面都会返回，所以我们写了一个module来进行back">
+<meta property="og:type" content="article">
+<meta property="og:title" content="weex-android添加返回按钮监听">
+<meta property="og:url" content="http://blog.marekchen.kim/weex/weex-android添加返回按钮监听">
+<meta property="og:site_name" content="Marek&#39;s Blog">
+<meta property="og:description" content="概述在一些场景中需要在选择内容后回传，例如地址选择、日期选择等。如果用两个页面来传递信息会使逻辑变得复杂，所以我们在开发过程中选择添加一个蒙层来进行选择操作（我们使用weex-ui的wxc-popup）。但是这会带来另一个问题，在android手机上按返回键时整个页面都会返回，所以我们写了一个module来进行back按钮的监听。 android代码部分创建BackEventModule12345">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-04T01:59:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="weex-android添加返回按钮监听">
+<meta name="twitter:description" content="概述在一些场景中需要在选择内容后回传，例如地址选择、日期选择等。如果用两个页面来传递信息会使逻辑变得复杂，所以我们在开发过程中选择添加一个蒙层来进行选择操作（我们使用weex-ui的wxc-popup）。但是这会带来另一个问题，在android手机上按返回键时整个页面都会返回，所以我们写了一个module来进行back按钮的监听。 android代码部分创建BackEventModule12345">
+  
+    <link rel="alternate" href="/atom.xml" title="Marek&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Marek&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.marekchen.kim"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-weex-android添加返回按钮监听" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/weex/weex-android添加返回按钮监听" class="article-date">
+  <time datetime="2018-01-03T14:57:39.000Z" itemprop="datePublished">2018-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/weex/">weex</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      weex-android添加返回按钮监听
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在一些场景中需要在选择内容后回传，例如地址选择、日期选择等。<br>如果用两个页面来传递信息会使逻辑变得复杂，所以我们在开发过程中选择添加一个蒙层来进行选择操作（我们使用weex-ui的<a href="https://github.com/alibaba/weex-ui/blob/master/packages/wxc-popup" target="_blank" rel="noopener">wxc-popup</a>）。<br>但是这会带来另一个问题，在android手机上按返回键时整个页面都会返回，所以我们写了一个module来进行back按钮的监听。</p>
+<h2 id="android代码部分"><a href="#android代码部分" class="headerlink" title="android代码部分"></a>android代码部分</h2><h3 id="创建BackEventModule"><a href="#创建BackEventModule" class="headerlink" title="创建BackEventModule"></a>创建BackEventModule</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BackEventModule</span> <span class="keyword">extends</span> <span class="title">WXModule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 存放 InstanceId 和对应的 JSCallback</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> HashMap&lt;String, JSCallback&gt; backListener = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JSMethod</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBackEventListener</span><span class="params">(JSCallback callback)</span> </span>&#123;</span><br><span class="line">        backListener.put(mWXSDKInstance.getInstanceId(), callback);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JSMethod</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeBackEventListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        backListener.remove(mWXSDKInstance.getInstanceId());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 给activity在onBackPressed()中调用</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">fireBackEvent</span><span class="params">(WXSDKInstance mInstance)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (XDEventModule.backListener.containsKey(mInstance.getInstanceId())) &#123;</span><br><span class="line">            JSCallback callback = XDEventModule.backListener.get(mInstance.getInstanceId());</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != callback) &#123;</span><br><span class="line">                Map&lt;String, Boolean&gt; result = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">                result.put(<span class="string">"ok"</span>, <span class="keyword">true</span>);</span><br><span class="line">                callback.invoke(result);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在WXPageActivity添加处理代码"><a href="#在WXPageActivity添加处理代码" class="headerlink" title="在WXPageActivity添加处理代码"></a>在WXPageActivity添加处理代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//mInstance 为 WXSDKInstance 实例</span></span><br><span class="line">    <span class="keyword">if</span> (BackEventModule.fireBackEvent(mInstance)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">super</span>.onBackPressed();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果有其他activity也加载weex页面，也需要添加此段代码</span></span><br></pre></td></tr></table></figure>
+<h2 id="在weex中使用"><a href="#在weex中使用" class="headerlink" title="在weex中使用"></a>在weex中使用</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下为示例代码</span></span><br><span class="line">openPopup()&#123;</span><br><span class="line">  <span class="comment">// 打开Popup时增加监听</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.isAndroid)&#123;</span><br><span class="line">    <span class="keyword">const</span> backEvent = weex.requireModule(<span class="string">'backEvent'</span>);</span><br><span class="line">    backEvent.addBackEventListener(<span class="function"><span class="params">e</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="comment">// back按钮事件监听回调中隐藏Popup</span></span><br><span class="line">      hideAddressPopup();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;,</span><br><span class="line">hidePopup()&#123;</span><br><span class="line">  <span class="comment">// 隐藏Popup方法中移除监听，使back按钮能恢复原有逻辑</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.isAndroid)&#123;</span><br><span class="line">    <span class="keyword">const</span> backEvent = weex.requireModule(<span class="string">'backEvent'</span>);</span><br><span class="line">    backEvent.removeBackEventListener();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">isAndroid() &#123;</span><br><span class="line">  <span class="keyword">let</span> &#123;platform&#125; = weex.config.env</span><br><span class="line">  <span class="keyword">return</span> platform.toLowerCase() === <span class="string">'android'</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.marekchen.kim/weex/weex-android添加返回按钮监听" data-id="cjbzugl8r0000x4x2vvtea2qi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/weex/weex使用小记" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">weex使用小记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/fastlane/">fastlane</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/weex/">weex</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/weex/weex-android添加返回按钮监听">weex-android添加返回按钮监听</a>
+          </li>
+        
+          <li>
+            <a href="/weex/weex使用小记">weex使用小记</a>
+          </li>
+        
+          <li>
+            <a href="/fastlane/fastlane使用记录">fastlane使用记录</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjAzMS84NTk1">
+  <script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Marek Chen<br>
+      Powered by <a href="http://hexo.io/" target="_blank" style="font-weight: bold">Hexo</a>
+      <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>      
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

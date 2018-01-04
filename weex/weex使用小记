@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>weex使用小记 | Marek&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="编写 weex vue 最容易出现的问题 标签不闭合，比如容易出现这个问题的标签是&amp;lt;input&amp;gt;和&amp;lt;image&amp;gt; 不能请求本地mock的json数据 不能请求本地图片url 不要使用ttf，加载会经常出错 weex 自带的navigator在手机上安装多个weex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="weex使用小记">
+<meta property="og:url" content="http://blog.marekchen.kim/weex/weex使用小记">
+<meta property="og:site_name" content="Marek&#39;s Blog">
+<meta property="og:description" content="编写 weex vue 最容易出现的问题 标签不闭合，比如容易出现这个问题的标签是&amp;lt;input&amp;gt;和&amp;lt;image&amp;gt; 不能请求本地mock的json数据 不能请求本地图片url 不要使用ttf，加载会经常出错 weex 自带的navigator在手机上安装多个weex编写的应用时，navigator.push会弹出应用选择框，需要自己重写navigator 尽量减少标签的层级，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-03T14:48:39.806Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="weex使用小记">
+<meta name="twitter:description" content="编写 weex vue 最容易出现的问题 标签不闭合，比如容易出现这个问题的标签是&amp;lt;input&amp;gt;和&amp;lt;image&amp;gt; 不能请求本地mock的json数据 不能请求本地图片url 不要使用ttf，加载会经常出错 weex 自带的navigator在手机上安装多个weex编写的应用时，navigator.push会弹出应用选择框，需要自己重写navigator 尽量减少标签的层级，">
+  
+    <link rel="alternate" href="/atom.xml" title="Marek&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Marek&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.marekchen.kim"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-weex使用小记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/weex/weex使用小记" class="article-date">
+  <time datetime="2017-11-27T02:34:30.000Z" itemprop="datePublished">2017-11-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/weex/">weex</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      weex使用小记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="编写-weex-vue-最容易出现的问题"><a href="#编写-weex-vue-最容易出现的问题" class="headerlink" title="编写 weex vue 最容易出现的问题"></a>编写 weex vue 最容易出现的问题</h2><ol>
+<li>标签不闭合，比如容易出现这个问题的标签是<code>&lt;input&gt;</code>和<code>&lt;image&gt;</code></li>
+<li>不能请求本地mock的json数据</li>
+<li>不能请求本地图片url</li>
+<li>不要使用ttf，加载会经常出错</li>
+<li>weex 自带的<code>navigator</code>在手机上安装多个weex编写的应用时，<code>navigator.push</code>会弹出应用选择框，需要自己重写<code>navigator</code></li>
+<li>尽量减少标签的层级，减少无意义的标签嵌套</li>
+<li>当有铺满整个页面，设置背景色的需求时。不能直接在顶级<code>div</code>直接设置css，需要在外层嵌套一个<code>&lt;div&gt;</code>，然后在内层<code>&lt;div&gt;</code>标签设置css</li>
+<li><code>&lt;scroller&gt;</code>标签必须设置<code>width</code>属性，否则ios上显示不出来</li>
+<li><code>&lt;input&gt;</code>标签需要设置<code>height</code>属性，而且必须要大于等于<code>font-size</code>。另外<code>&lt;input&gt;</code>在最底部时，可能会出现&lt;<code>input</code>&gt;被虚拟键盘遮挡的bug，这个bug应该是weex的问题</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.marekchen.kim/weex/weex使用小记" data-id="cjbzugl900003x4x2vbf1ywke" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/weex/weex-android添加返回按钮监听" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          weex-android添加返回按钮监听
+        
+      </div>
+    </a>
+  
+  
+    <a href="/fastlane/fastlane使用记录" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">fastlane使用记录</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/fastlane/">fastlane</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/weex/">weex</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/weex/weex-android添加返回按钮监听">weex-android添加返回按钮监听</a>
+          </li>
+        
+          <li>
+            <a href="/weex/weex使用小记">weex使用小记</a>
+          </li>
+        
+          <li>
+            <a href="/fastlane/fastlane使用记录">fastlane使用记录</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjAzMS84NTk1">
+  <script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Marek Chen<br>
+      Powered by <a href="http://hexo.io/" target="_blank" style="font-weight: bold">Hexo</a>
+      <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>      
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
